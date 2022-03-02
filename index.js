@@ -3,6 +3,10 @@ const port = 8000;
 
 const app = express();
 
+// set up the view engine
+app.set("view engine", "ejs");
+app.set("views", "./views");
+
 // use express router
 app.use("/", require("./routes/index"));
 
