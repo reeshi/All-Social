@@ -1,0 +1,29 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: blue;
+  color: white;
+  font-weight: bolder;
+  padding: 0 0.7rem;
+  font-size: 1.5rem;
+  height: 1.7em;
+}
+
+header ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+header ul li {
+  display: inline;
+  padding-left: 0.5rem;
+}
+
+header ul li a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+}

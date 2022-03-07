@@ -1,0 +1,21 @@
+footer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 5em;
+    background-color: gray;
+    padding-left: 0.7rem;
+    color: white;
+    font-weight: bold;
+    #footer-div-flex{
+        display: flex;
+        flex-direction: column;
+        padding-left: 1.5rem;
+        margin-top: 0.8rem;
+        a{
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    }
+}
