@@ -27,8 +27,31 @@ module.exports.create = function(req, res){
                 // whenever you updated something call save() so that it will update in the database
                 post.save();
 
-                res.redirect("/");
+                res.redirect("back");
             });
+        }
+    });
+}
+
+// deleting a comment
+module.exports.destroy = function(req, res){
+    // check comment exist in database
+    Comment.findById(req.query.commentId, function(err, comment){
+        if(err){console.log("Error in finding the comment"); return;}
+
+        if(comment){
+            // check whether the user is authorize to delete this comment
+            if(comment.user == req.user.id || req.query.postUserId == req.user.id){
+                let postId = comment.post;
+                comment.remove();
+                // deleting from the post model
+                Post.findByIdAndUpdate(postId, {$pull: {comments: req.query.commentId}}, function(err, post){
+                    return res.redirect("back");
+                });
+
+            }else{
+                return res.redirect("back");
+            }
         }
     });
 }
