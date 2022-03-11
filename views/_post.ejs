@@ -1,0 +1,38 @@
+<li>
+
+    <p>
+        <!-- delete button only visible to the user who created that post  -->
+        <% if(locals.user && post.user.id==locals.user.id){ %>
+            <small>
+                <a href="/posts/destroy/<%= post.id %>">X</a>
+            </small>
+            <% } %>
+
+        <%= post.content %>
+        <br>
+        <small>
+            <%= post.user.name %>
+        </small>
+    </p>
+
+    <div class="post-comment">
+        <% if(locals.user){ %>
+            <form action="/comments/create" method="post">
+                <input type="text" name="content" placeholder="Type Here to add comment...">
+                <input type="hidden" name="post" value="<%= post._id%>">
+                <input type="submit" value="Add Comment">
+            </form>
+            <% } %>
+    </div>
+
+    <div class="post-comment-list">
+        <ul id="post-comments-<%= post._id %>">
+            <% for(let comment of post.comments) {%>
+                
+                <!-- included the partial of comment and also pass the current comment  -->
+                <%- include("_comment", {comment: comment});%>
+
+            <% } %>
+        </ul>
+    </div>
+</li>

@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 
 // home controller
 module.exports.home = function(req, res){
@@ -18,9 +19,13 @@ module.exports.home = function(req, res){
                 return;
             }
 
-            res.render("home", {
-                title: "All Social | Home",
-                posts: posts
-            })
+            User.find({}, function(err, all_users){
+                if(err){console.log("Error in finding all the user"); return;}
+                res.render("home", {
+                    title: "All Social | Home",
+                    posts: posts,
+                    all_users: all_users
+                });
+            });
         });
 }

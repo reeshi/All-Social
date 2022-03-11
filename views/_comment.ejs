@@ -1,0 +1,16 @@
+<li>
+    <p>
+        <!-- delete button only visible to the user who created that comment  -->
+        <% if(locals.user && (comment.user.id==locals.user.id || post.user.id==locals.user.id)){ %>
+            <small>
+                <a href="/comments/destroy/?commentId=<%= comment.id %>&postUserId=<%= post.user.id %>">X</a>
+            </small>
+            <% } %>
+
+        <%= comment.content %>
+        <br>
+        <small>
+            <%= comment.user.name %>
+        </small>
+    </p>
+</li>

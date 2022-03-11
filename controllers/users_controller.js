@@ -1,10 +1,33 @@
 const User = require("../models/user");
 
 module.exports.profile = function(req, res){
-    return res.render("user_profile", {
-        title: "User Profile"
+    User.findById(req.params.id, function(err, user){
+        if(err){console.log("Error in finding the user"); return;}
+
+        return res.render("user_profile", {
+            title: "User Profile", 
+            profile_user: user
+        });
     });
 }
+
+// update a profile 
+module.exports.update = function(req, res){
+    // check the authorized
+    if(req.user.id == req.params.id){
+        // update the profile information
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            if(err){console.log("Error in updating the profile"); return;}
+
+            return res.redirect("back");
+        });
+
+    }else{
+        // the user is not authorized to update the profile
+        return res.status(401).send("Unauthorized");
+    }
+}
+
 
 module.exports.posts = function(req, res){
     return res.end("<h1>Users Post</h1>");
