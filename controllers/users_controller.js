@@ -18,12 +18,13 @@ module.exports.update = function(req, res){
         // update the profile information
         User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
             if(err){console.log("Error in updating the profile"); return;}
-
+            req.flash("Success", "Profile Updated Successfully!")
             return res.redirect("back");
         });
 
     }else{
         // the user is not authorized to update the profile
+        req.flash("Error", "Your are not authorized to update this profile");
         return res.status(401).send("Unauthorized");
     }
 }
@@ -87,11 +88,13 @@ module.exports.create = function(req, res){
 
 // user login and creating sesion for the user
 module.exports.createSession = function(req, res){
+    req.flash("Success", "Logged in Successfully");
     return res.redirect("/");
 };
 
 
 module.exports.destroySession = function(req, res){
+    req.flash("Success", "You Have Logged Out");
     req.logout();
     
     return res.redirect("/");
