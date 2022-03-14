@@ -19,6 +19,17 @@ module.exports.create = async function(req, res){
            // whenever you updated something call save() so that it will update in the database
            post.save();
 
+           let popComment = await Comment.findById(comment._id).populate("user", "-password").populate("post");
+           
+           if(req.xhr){
+               return res.status(200).json({
+                   data: {
+                       comment: popComment
+                   },
+                   message: "Comment is created"
+               });
+           }
+
            req.flash("Success", "Comment added");
            res.redirect("back");
        }
@@ -40,6 +51,15 @@ module.exports.destroy = async function(req, res){
                 comment.remove();
                 // deleting from the post model
                 await Post.findByIdAndUpdate(postId, { $pull: { comments: req.query.commentId } });
+
+                if (req.xhr) {
+                    return res.status(200).json({
+                        data: {
+                            comment_id: req.query.commentId
+                        },
+                        message: "Comment is deleted"
+                    });
+                }
 
                 req.flash("Success", "Comment Deleted")
                 return res.redirect("back");
