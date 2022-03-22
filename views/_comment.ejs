@@ -1,16 +1,28 @@
-<li id="comment-<%= comment._id %>">
+<li id="comment-<%=comment._id%>">
     <p>
         <!-- delete button only visible to the user who created that comment  -->
         <% if(locals.user && (comment.user.id==locals.user.id || post.user.id==locals.user.id)){ %>
             <small>
-                <a class="delete-comment-button" href="/comments/destroy/?commentId=<%= comment.id %>&postUserId=<%= post.user.id %>">X</a>
+                <a class="delete-comment-button" href="/comments/destroy/?commentId=<%= comment._id %>&postUserId=<%= post.user._id %>">X</a>
             </small>
-            <% } %>
+        <% } %>
 
         <%= comment.content %>
         <br>
         <small>
             <%= comment.user.name %>
+        </small>
+        <!-- showing the likes of this comment  -->
+        <br>
+        <small>
+            <% if(locals.user) {%>
+                <a class="toggle-like-button" data-likes="<%= comment.likes.length %>"
+                    href="/likes/toggle/?id=<%=comment._id%>&type=Comment">
+                    <%= comment.likes.length %> Likes
+                </a>
+            <% }else{ %>
+                <%= comment.likes.length %> Likes
+            <% } %>
         </small>
     </p>
 </li>

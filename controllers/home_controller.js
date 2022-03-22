@@ -9,15 +9,19 @@ module.exports.home = async function(req, res){
     try {
         let posts = await Post.find({})
             .sort("-createdAt")
-            .populate("user")
-            .populate({
-                path: "comments",
-                options: {sort: "-createdAt"},
-                populate: {
-                    path: "user"
+            .populate([
+                {path: "user"},
+                {
+                    path: "comments",
+                    populate: [
+                        {path: "user"},
+                        {path: "likes"}
+                    ],
+                    options: { sort: "-createdAt" }
                 },
-            });
-
+                {path: "likes"}
+            ]);
+        
         let users = await User.find({});
         
         return res.render("home", {

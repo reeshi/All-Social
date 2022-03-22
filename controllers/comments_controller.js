@@ -3,6 +3,7 @@ const Post = require("../models/post");
 const commentsMailer = require("../mailers/comments_mailer");
 const queue = require("../config/kue");
 const commentEmailWorker = require("../workers/comment_email_worker");
+const Like = require("../models/like");
 
 module.exports.create = async function(req, res){
    try{
@@ -57,6 +58,10 @@ module.exports.destroy = async function(req, res){
             // check whether the user is authorize to delete this comment
             if (comment.user == req.user.id || req.query.postUserId == req.user.id) {
                 let postId = comment.post;
+                
+                // deleting the likes associated to this comment
+                await Like.deleteMany({likeable: comment._id, onModel: "Comment"});
+
                 comment.remove();
                 // deleting from the post model
                 await Post.findByIdAndUpdate(postId, { $pull: { comments: req.query.commentId } });
