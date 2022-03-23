@@ -23,4 +23,10 @@ router.get("/sign-out", usersController.destroySession);
 router.get("/auth/google", passport.authenticate("google", {scope: ["profile", "email"]}));
 router.get("/auth/google/callback", passport.authenticate("google", {failureRedirect: "/users/sign-in"}), usersController.createSession);
 
+// make a friend
+router.post("/makefriend", usersController.makeFriend);
+
+// remove a friend
+router.post("/removeFriend", usersController.removeFriend);
+
 module.exports = router;

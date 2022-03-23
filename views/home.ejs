@@ -2,6 +2,10 @@
 
 <div id="home-container">
 
+    <section id="left-section">
+
+    </section>
+
     <section id="feed-post">
     
         <h4>Post</h4>
@@ -25,15 +29,27 @@
     
     </section>
     
-    <section id="user-friends">
-        <h4>Friends</h4>
-        <% for(let u of all_users) {%>
-            <p>
-                <a href="/users/profile/<%= u.id %>">
-                    <%= u.name %>
-                </a>
-            </p>
-        <% } %>
+    <section id="users">
+        <div id="user-friends">
+            <h4>Friends</h4>
+            <% for(let friend of friends) {%>
+                <p>
+                    <a href="/users/profile/<%= friend.id %>">
+                        <%= friend.name %>
+                    </a>
+                </p>
+            <% } %>
+        </div>
+        <div id="all-users">
+            <h4>All Users</h4>
+            <% for(let u of all_users) {%>
+                <p>
+                    <a href="/users/profile/<%= u.id %>">
+                        <%= u.name %>
+                    </a>
+                </p>
+            <% } %>
+        </div>
     </section>
 
 </div>

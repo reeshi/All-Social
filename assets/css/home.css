@@ -2,13 +2,29 @@
   display: flex;
 }
 
-#home-container #feed-post {
-  width: 70%;
-  padding: 0.5rem;
+#home-container #left-section {
+  flex-grow: 1;
 }
 
-#home-container #user-friends {
+#home-container #feed-post {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border-left: 1px solid lightgray;
+}
+
+#home-container #users {
   padding: 0.5rem;
   border-left: 1px solid lightgray;
   min-height: 100vh;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#home-container #users #user-friends {
+  flex-grow: 1;
+}
+
+#home-container #users #all-users {
+  flex-grow: 1;
 }

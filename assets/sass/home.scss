@@ -1,12 +1,26 @@
 #home-container{
     display: flex;
-    #feed-post{
-        width: 70%;
-        padding: 0.5rem;
+    #left-section{
+        flex-grow: 1;
     }
-    #user-friends{
+    #feed-post{
+        // width: 50%;
+        flex-grow: 1;
+        padding: 0.5rem;
+        border-left: 1px solid lightgray;
+    }
+    #users{
         padding: 0.5rem;
         border-left: 1px solid lightgray;
         min-height: 100vh;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        #user-friends{
+            flex-grow: 1;
+        }
+        #all-users{
+            flex-grow: 1;
+        }
     }
 }

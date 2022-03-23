@@ -28,4 +28,21 @@
         <%= profile_user.email %>
     </p>
 
+    <% if(friend){%>
+
+        <a href="/users/removefriend/?friendshipId=<%=friendshipId%>&profileUser=<%= profile_user._id%>" id="friend-button">
+            Remove Friend
+        </a>
+
+    <% } else {%>
+
+        <a href="/users/makefriend/?toUser=<%= profile_user._id %>" id="friend-button">
+            Add Friend
+        </a>
+
+    <% } %>
+
 <% } %>
+
+
+<script src="/js/friend.js"></script>
