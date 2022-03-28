@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="/css/home.css">
-<link rel="stylesheet" href="/css/chat_box.css">
+<link rel="stylesheet" href="<%= assetPath('css/home.css') %>">
+<link rel="stylesheet" href="<%= assetPath('css/chat_box.css') %>">
 
 <div id="home-container">
 
@@ -57,11 +57,11 @@
 
 </div>
 
-<script src="/js/home_post_comments.js"></script>
-<script src="/js/home_posts.js"></script>
+<script src="<%= assetPath('js/home_post_comments.js') %>"></script>
+<script src="<%= assetPath('js/home_posts.js') %>"></script>
 
 <!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
-<script src="js/toggle_likes.js"></script>
+<script src="<%= assetPath('js/toggle_likes.js') %>"></script>
 <script>
     $('.toggle-like-button').each(function () {
         let self = this;
@@ -73,7 +73,7 @@
     integrity="sha512-MgkNs0gNdrnOM7k+0L+wgiRc5aLgl74sJQKbIWegVIMvVGPc1+gc1L2oK9Wf/D9pq58eqIJAxOonYPVE5UwUFA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="/js/chat_engine.js"></script>
+<script src="<%= assetPath('js/chat_engine.js') %>"></script>
 
 <% if(locals.user){%>
     <script>

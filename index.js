@@ -1,8 +1,12 @@
 const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const cookieParser = require("cookie-parser");
+const env = require("./config/environment");
+const logger = require("morgan");
 const port = 8000;
 const app = express();
+require("./config/view-helpers")(app);
+
 const db = require("./config/mongoose");
 // used for session cookies
 const session = require("express-session");
@@ -21,14 +25,17 @@ const chatServer = require("http").Server(app);
 const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
 chatServer.listen(5000);
 console.log("chat server is listening on port 5000");
+const path = require("path");
 
-app.use(sassMiddleware({
-    src: "./assets/sass",
-    dest: "./assets/css",
-    debug: true,
-    outputStyle: "expanded",
-    prefix: "/css"
-}))
+if(env.name == "development"){
+    app.use(sassMiddleware({
+        src: path.join(__dirname, env.asset_path, "sass"),
+        dest: path.join(__dirname, env.asset_path, "css"),
+        debug: true,
+        outputStyle: "expanded",
+        prefix: "/css"
+    }));
+}
 
 app.use(express.urlencoded({
     extended: true
@@ -38,10 +45,12 @@ app.use(cookieParser());
 // set up the view engine
 app.set("view engine", "ejs");
 app.set("views", "./views");
-app.use(express.static("./assets"));
+app.use(express.static(env.asset_path));
 
 // Make the upload path available to the browser
 app.use("/uploads", express.static(__dirname + "/uploads"));
+
+app.use(logger(env.morgan.mode, env.morgan.options));
 
 app.use(expressLayouts);
 // extract the styles and script from sub-pages into the layout
@@ -52,7 +61,7 @@ app.set("layout extractScripts", true);
 app.use(session({
     name: "All Social",
     // TODO change the secret before deployment in production mode
-    secret: "blahsomething",
+    secret: env.session_cookie_key,
     saveUninitialized: false,
     resave: false,
     cookie: {
