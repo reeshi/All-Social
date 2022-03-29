@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const env = require("./config/environment");
 const logger = require("morgan");
 const port = 8000;
-const app = express();
+const app = express()
 require("./config/view-helpers")(app);
 
 const db = require("./config/mongoose");
