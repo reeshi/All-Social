@@ -21,11 +21,16 @@ module.exports.toggleLike = async function(req, res){
             likeable: req.query.id,
             onModel: req.query.type
         });
-
+        
         // if a like already exist then deleted it
         if(existingLike){
             likeable.likes.pull(existingLike._id);
             likeable.save();
+            await Like.deleteOne({
+                user: req.user._id,
+                likeable: req.query.id,
+                onModel: req.query.type
+            });
             deleted = true;
         }else{
             // else make a new like
